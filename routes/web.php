@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get("/create/edit-article", function() {
     return view("create-edit-article");
 });
+
+Route::get("/article", function() {
+    return view("article");
+});
