@@ -61,7 +61,6 @@
                                 </li>
                             </ul>
                         </div>
-
                         <div class="article-preview">
                             <div class="article-meta">
                                 <a href="/profile/eric-simons"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
