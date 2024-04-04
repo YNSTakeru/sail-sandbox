@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            "avatar" => "https://www.gravatar.com/avatar/".md5(Str::random(10))."?d=mp",
             'remember_token' => Str::random(10),
         ];
     }
