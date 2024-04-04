@@ -100,7 +100,7 @@
 
                             <div class="tag-list">
                                 @foreach ($favoriteTags as $favoriteTag)
-                                    <a href="" class="tag-pill tag-default">{{ $favoriteTag->tag_name }}</a>
+                                    <button class="tag-pill tag-default">{{ $favoriteTag->tag_name }}</button>
                                 @endforeach
                             </div>
                         </div>
@@ -121,8 +121,10 @@
     <script>
         window.onload = function() {
             window.location.hash = '#/';
+            history.replaceState('#/', document.title, window.location.pathname);
         };
     </script>
+    <script src="{{ asset('/js/home/popularTagBtn.js') }}"></script>
 </body>
 
 </html>

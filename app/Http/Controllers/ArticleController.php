@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
         $articles = Article::select("articles.*", "users.name as user_name")
