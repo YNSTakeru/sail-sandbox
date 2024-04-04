@@ -25,16 +25,10 @@
                         <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/editor"> <i class="ion-compose"></i>&nbsp;New Article </a>
+                        <a class="nav-link" href="/login">Sign in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile/eric-simons">
-                            <img src="" class="user-pic" />
-                            Eric Simons
-                        </a>
+                        <a class="nav-link" href="/register">Sign up</a>
                     </li>
                 </ul>
             </div>
@@ -124,6 +118,11 @@
             </span>
         </div>
     </footer>
+    <script>
+        window.onload = function() {
+            window.location.hash = '#/';
+        };
+    </script>
 </body>
 
 </html>
