@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +20,10 @@ class ArticleFactory extends Factory
     {
         return [
             'favorite_count' => fake()->numberBetween(0, 100),
-            'title' => fake()->unique()->sentence(),
-            "content" => fake()->paragraph(),
-            'user_id' => UserFactory::new(),
-            'tag_id' => TagFactory::new(),
+            'title' => fake()->unique()->realTextBetween(5, 20),
+            "content" => fake()->realTextBetween(30,200),
+            'user_id' => fake()->numberBetween(1, User::count()),
+            "created_at" => fake()->dateTimeBetween("-1 year"),
         ];
     }
 }

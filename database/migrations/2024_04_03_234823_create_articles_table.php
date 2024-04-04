@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('content');
             $table->timestamps();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
         });
     }
 
