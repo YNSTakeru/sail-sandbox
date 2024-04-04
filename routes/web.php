@@ -16,3 +16,8 @@ Route::get("/article", function() {
 });
 
 
+// Route::fallback(
+//     function () {
+//         return redirect("/#");
+//     }
+// );
