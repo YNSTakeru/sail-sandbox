@@ -14,7 +14,10 @@ class ArticleController extends Controller
     public function index()
     {
         $users = User::all();
-        $articles = Article::all();
+        $articles = Article::select("articles.*", "users.name as user_name")
+            ->join("users", "articles.user_id", "=", "users.id")->orderBy("articles.created_at", "desc")
+            ->paginate(10);
+
         $tags = Tag::all();
         $articleTags = ArticleTag::all();
 
