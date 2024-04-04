@@ -14,7 +14,7 @@ class ApiArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-        return response()->json($articles);
+        return response()->json($articles, 200, [],JSON_UNESCAPED_UNICODE);
     }
 
     /**
