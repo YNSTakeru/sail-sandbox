@@ -121,6 +121,7 @@
     <script>
         window.onload = function() {
             window.location.hash = '#/';
+            history.replaceState('#/', document.title, window.location.pathname);
         };
     </script>
     <script src="{{ asset('/js/home/popularTagBtn.js') }}"></script>
