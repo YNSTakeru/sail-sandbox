@@ -25,7 +25,7 @@ class ArticleTagSeeder extends Seeder
             foreach ($tags as $tag) {
                 ArticleTag::firstOrCreate([
                     'article_id' => $article->id,
-                    'tag_id' => $tag->id,
+                    'tag_id' => $tag->name,
                 ]);
                 if ($generateCount-- <= 0)
                 break;

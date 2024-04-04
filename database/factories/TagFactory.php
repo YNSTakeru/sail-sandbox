@@ -17,7 +17,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->realTextBetween(3, 10),
+            'name' => fake()->unique()->realTextBetween(3, 10),
         ];
     }
 }

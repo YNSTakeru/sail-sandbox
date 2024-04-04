@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('article_tags', function (Blueprint $table) {
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->string('tag_id');
+            $table->foreign('tag_id')->references('name')->on('tags')->onDelete('cascade');
             $table->primary(['article_id', 'tag_id']);
             $table->timestamps();
         });
