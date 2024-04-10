@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
 </head>
 
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
+<body class="font-sans antialiased">
     <header>
         <nav class="navbar navbar-light">
             <div class="container">
