@@ -8,18 +8,20 @@
                         <a href="/register">Need an account?</a>
                     </p>
 
-                    <ul class="error-messages">
-                        <li>That email is already taken</li>
-                    </ul>
+                    <x-input-error :messages="$errors->get('email')"></x-input-error>
+                    <x-input-error :messages="$errors->get('password')"></x-input-error>
 
-                    <form>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
                         <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="Email" />
+                            <x-text-input id="email" type="email" name="email" :value="old('email')" required
+                                autocomplete="email" placeholder="Email" />
                         </fieldset>
                         <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="password" placeholder="Password" />
+                            <x-text-input id="password" type="password" name="password" required
+                                autocomplete="new-password" placeholder="Password" />
                         </fieldset>
-                        <button class="btn btn-lg btn-primary pull-xs-right">Sign in</button>
+                        <x-primary-button class="pull-xs-right">Sign in</x-primary-button>
                     </form>
                 </div>
             </div>
