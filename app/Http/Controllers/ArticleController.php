@@ -22,12 +22,17 @@ class ArticleController extends Controller
         $articleTags = ArticleTag::all();
 
         $favoriteTags = DB::table("article_tags")->join("articles", "article_tags.article_id", "=", "articles.id")->join("tags", "article_tags.tag_id", "=", "tags.name")
-            ->select(DB::raw("SUM(articles.favorite_count) as total_favorite_count"),"tags.name as tag_name")->groupBy("tags.name")->orderBy("total_favorite_count", "desc")->limit(10)
+            ->select(DB::raw("SUM(articles.favorite_count) as total_favorite_count"), "tags.name as tag_name")->groupBy("tags.name")->orderBy("total_favorite_count", "desc")->limit(10)
             ->get();
 
 
         // bladeファイルの名前を指定して、compactで変数を渡す
         return view("home", compact("articles", "users", "tags", "articleTags", "favoriteTags"));
 
+    }
+
+    public function create()
+    {
+        return view("articles.create");
     }
 }
