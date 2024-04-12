@@ -122,6 +122,13 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'abstract' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string', 'max:1000'],
+        ]);
+
         Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
             return count($value) === count(array_unique($value));
         });
