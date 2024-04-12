@@ -38,7 +38,7 @@
                                          <i class="ion-heart"></i> {{ $article->favorite_count }}
                                      </button>
                                  </div>
-                                 <a href="/article/how-to-build-webapps-that-scale" class="preview-link">
+                                 <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="preview-link">
                                      <h1>{{ $article->title }}</h1>
                                      <p>{{ $article->abstract }}</p>
                                      <div class="custom-article-footer">

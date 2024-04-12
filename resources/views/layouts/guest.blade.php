@@ -22,11 +22,13 @@
                 <ul class="nav navbar-nav pull-xs-right">
                     <li class="nav-item">
                         <!-- Add "active" class when you're on that page" -->
-                        <a class="nav-link active" href="/">Home</a>
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"
+                            active="{{ request()->routeIs('home') }}">Home</a>
                     </li>
                     @if (Auth::check())
                         <li class="nav-item">
-                            <a class="nav-link" href="/editor"> <i class="ion-compose"></i>&nbsp;New Article </a>
+                            <a class="nav-link {{ request()->routeIs('articles.create') ? 'active' : '' }}"
+                                href="{{ route('articles.create') }}"> <i class="ion-compose"></i>&nbsp;New Article </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
@@ -39,10 +41,13 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Sign in</a>
+                            <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                                href="{{ route('login') }}">Sign
+                                in</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/register">Sign up</a>
+                            <a class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}"
+                                href="{{ route('register') }}">Sign up</a>
                         </li>
                     @endif
                 </ul>
