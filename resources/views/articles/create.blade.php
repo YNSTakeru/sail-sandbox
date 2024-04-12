@@ -3,10 +3,6 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-10 offset-md-1 col-xs-12">
-                    <ul class="error-messages">
-                        <li>That title is required</li>
-                    </ul>
-
                     <x-input-error :messages="$errors->get('title')"></x-input-error>
                     <x-input-error :messages="$errors->get('content')"></x-input-error>
                     <x-input-error :messages="$errors->get('abstract')"></x-input-error>
