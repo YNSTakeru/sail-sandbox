@@ -15,18 +15,18 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <fieldset class="form-group">
-                            <x-text-input id="name" type="text" name="name" :value="old('name')" required
-                                autofocus autocomplete="name" placeholder="Your Name" placeholder="Username" />
+                            <x-text-input id="name" class="form-control-lg" type="text" name="name"
+                                :value="old('name')" required autofocus autocomplete="name" placeholder="Username" />
                         </fieldset>
                         <fieldset class="form-group">
-                            <x-text-input id="email" type="email" name="email" :value="old('email')" required
-                                autocomplete="email" placeholder="Email" />
+                            <x-text-input id="email" class="form-control-lg" type="email" name="email"
+                                :value="old('email')" required autocomplete="email" placeholder="Email" />
                         </fieldset>
                         <fieldset class="form-group">
-                            <x-text-input id="password" type="password" name="password" required
-                                autocomplete="new-password" placeholder="Password" />
+                            <x-text-input id="password" class="form-control-lg" type="password" name="password"
+                                required autocomplete="new-password" placeholder="Password" />
                         </fieldset>
-                        <x-primary-button class="pull-xs-right">Sign in</x-primary-button>
+                        <x-primary-button class="pull-xs-right">Sign up</x-primary-button>
                     </form>
                 </div>
             </div>

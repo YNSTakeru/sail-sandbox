@@ -20,8 +20,9 @@ class ArticleFactory extends Factory
     {
         return [
             'favorite_count' => fake()->numberBetween(0, 100),
-            'title' => fake()->unique()->realTextBetween(5, 20),
-            "content" => fake()->realTextBetween(30,200),
+            'title' => fake()->realTextBetween(5, 20),
+            "abstract" => fake()->realTextBetween(30, 200),
+            "content" => fake()->realTextBetween(100, 400),
             'user_id' => fake()->numberBetween(1, User::count()),
             "created_at" => fake()->dateTimeBetween("-1 year"),
         ];
