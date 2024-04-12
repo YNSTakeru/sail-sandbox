@@ -7,31 +7,39 @@
                         <li>That title is required</li>
                     </ul>
 
-                    <form method="POST" action="{{ route('articles.create') }}">
+                    <x-input-error :messages="$errors->get('title')"></x-input-error>
+                    <x-input-error :messages="$errors->get('content')"></x-input-error>
+                    <x-input-error :messages="$errors->get('abstract')"></x-input-error>
+                    <x-input-error :messages="$errors->get('tags')"></x-input-error>
+
+                    <form method="POST" action="{{ route('articles.store') }}">
                         @csrf
                         <fieldset>
                             <fieldset class="form-group">
-                                <input type="text" class="form-control form-control-lg" placeholder="Article Title" />
+                                <x-text-input type="text" class="form-control-lg" placeholder="Article Title"
+                                    :value="old('title')" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="text" class="form-control" placeholder="What's this article about?" />
+                                <x-text-input type="text" placeholder="What's this article about?"
+                                    :value="old('abstract')" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)"></textarea>
+                                <x-textarea rows="8" placeholder="Write your article (in markdown)"
+                                    :value="old('content')"></x-textarea>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="text" class="form-control" placeholder="Enter tags" />
+                                <x-text-input id="tag-input" type="text" placeholder="Enter tags" />
                                 <div class="tag-list">
-                                    <span class="tag-default tag-pill"> <i class="ion-close-round"></i> tag </span>
                                 </div>
                             </fieldset>
-                            <button class="btn btn-lg pull-xs-right btn-primary" type="button">
+                            <x-primary-button class="pull-xs-right">
                                 Publish Article
-                            </button>
+                            </x-primary-button>
                         </fieldset>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{{ asset('build/create.js') }}"></script>
 </x-guest-layout>

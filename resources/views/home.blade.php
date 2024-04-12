@@ -40,7 +40,7 @@
                                  </div>
                                  <a href="/article/how-to-build-webapps-that-scale" class="preview-link">
                                      <h1>{{ $article->title }}</h1>
-                                     <p>{{ $article->content }}</p>
+                                     <p>{{ $article->abstract }}</p>
                                      <div class="custom-article-footer">
                                          <span>Read more...</span>
                                          <ul class="tag-list custom-tag-list">

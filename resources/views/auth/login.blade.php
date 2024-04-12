@@ -14,12 +14,12 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <fieldset class="form-group">
-                            <x-text-input id="email" type="email" name="email" :value="old('email')" required
-                                autocomplete="email" placeholder="Email" />
+                            <x-text-input id="email" class="form-control-lg" type="email" name="email"
+                                :value="old('email')" required autocomplete="email" placeholder="Email" />
                         </fieldset>
                         <fieldset class="form-group">
-                            <x-text-input id="password" type="password" name="password" required
-                                autocomplete="new-password" placeholder="Password" />
+                            <x-text-input id="password" class="form-control-lg" type="password" name="password"
+                                required autocomplete="new-password" placeholder="Password" />
                         </fieldset>
                         <x-primary-button class="pull-xs-right">Sign in</x-primary-button>
                     </form>
