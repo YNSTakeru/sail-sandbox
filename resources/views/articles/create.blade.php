@@ -32,6 +32,7 @@
                                 <div class="tag-list">
                                 </div>
                             </fieldset>
+                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                             <x-primary-button class="pull-xs-right">
                                 Publish Article
                             </x-primary-button>
