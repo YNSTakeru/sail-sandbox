@@ -38,6 +38,6 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        dd($request, $request->title);
+        dd($request, $request->tags);
     }
 }

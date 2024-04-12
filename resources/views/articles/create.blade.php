@@ -17,15 +17,15 @@
                         <fieldset>
                             <fieldset class="form-group">
                                 <x-text-input type="text" class="form-control-lg" placeholder="Article Title"
-                                    :value="old('title')" />
+                                    :value="old('title')" name="title" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <x-text-input type="text" placeholder="What's this article about?"
-                                    :value="old('abstract')" />
+                                <x-text-input type="text" placeholder="What's this article about?" :value="old('abstract')"
+                                    name="abstract" />
                             </fieldset>
                             <fieldset class="form-group">
                                 <x-textarea rows="8" placeholder="Write your article (in markdown)"
-                                    :value="old('content')"></x-textarea>
+                                    :value="old('content')" name="content"></x-textarea>
                             </fieldset>
                             <fieldset class="form-group">
                                 <x-text-input id="tag-input" type="text" placeholder="Enter tags" />

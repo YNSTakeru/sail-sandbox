@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const $tagPill = document.createElement("span");
             $tagPill.classList.add("tag-default", "tag-pill");
 
+            $tagPill.dataset.tag_name = tagName;
+
             $tagPill.appendChild($icon);
             $tagPill.appendChild(document.createTextNode(tagName));
 
@@ -32,4 +34,16 @@ document.addEventListener("DOMContentLoaded", function () {
             e.target.value = "";
         }
     });
+});
+
+document.querySelector("form").addEventListener("submit", (e) => {
+    const tags = Array.from(
+        document.querySelectorAll(".tag-list .tag-pill"),
+    ).map((span) => span.dataset.tag_name);
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "tags";
+    input.value = JSON.stringify(tags);
+    e.target.appendChild(input);
 });
