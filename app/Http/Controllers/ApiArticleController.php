@@ -11,10 +11,12 @@ class ApiArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $tag = $request->tag;
         $articles = Article::all();
-        return response()->json($articles, 200, [],JSON_UNESCAPED_UNICODE);
+
+        return response()->json($tag, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
