@@ -8,7 +8,7 @@
                     <x-input-error :messages="$errors->get('abstract')"></x-input-error>
                     <x-input-error :messages="$errors->get('tags')"></x-input-error>
 
-                    <form method="POST" action="{{ route('articles.store') }}">
+                    <form method="POST" action="{{ route('articles.update', ['id' => $article->id]) }}">
                         @csrf
                         <fieldset>
                             <fieldset class="form-group">

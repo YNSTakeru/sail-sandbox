@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     for (let i = 0; i < $tag.length; i++) {
+        $tag[i].parentElement.dataset.tag_name =
+            $tag[i].parentElement.textContent;
         $tag[i].addEventListener("click", (e) => {
             e.target.parentElement.remove();
         });

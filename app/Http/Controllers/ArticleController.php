@@ -119,4 +119,47 @@ class ArticleController extends Controller
 
         return view('articles.edit', compact('article', "tags"));
     }
+
+    public function update(Request $request, $id)
+    {
+        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
+            return count($value) === count(array_unique($value));
+        });
+
+        $convertTags = json_decode($request->tags, true);
+
+
+        $request->merge([
+            "tags" => $convertTags,
+        ]);
+
+        $request->validate([
+            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
+            'tags.*' => ['string', 'max:255'],
+        ]);
+
+
+        $article = Article::find($id);
+        $article->title = $request->title;
+        $article->abstract = $request->abstract;
+        $article->content = $request->content;
+        $article->save();
+
+        $tagModels = [];
+        foreach ($convertTags as $tag) {
+            $tagModel = Tag::firstOrCreate(["name" => $tag]);
+            $tagModels[] = $tagModel;
+        }
+
+        ArticleTag::where("article_id", $id)->delete();
+
+        foreach ($tagModels as $tagModel) {
+            ArticleTag::create([
+                "article_id" => $article->id,
+                "tag_id" => $tagModel->name,
+            ]);
+        }
+
+        return to_route("articles.show", ["id" => $id]);
+    }
 }
