@@ -14,18 +14,31 @@ class ArticleController extends Controller
 {
     public function index(Request $request)
     {
+        $requestTag = $request->input('tag');
+
+        // ここからtagがある時ない時でフィルタリング
+
         $users = User::all();
-        $articles = Article::select("articles.*", "users.name as user_name")
+
+        if(!$requestTag) {
+            $articles = Article::select("articles.*", "users.name as user_name")
             ->join("users", "articles.user_id", "=", "users.id")->orderBy("articles.created_at", "desc")
             ->paginate(10);
+
+
+        }
+
+        if($requestTag) {
+            $articles = Article::select("articles.*", "users.name as user_name", "article_tags.tag_id as tag_name")->join("users", "articles.user_id", "=", "users.id")->join("article_tags", "articles.id", "=", "article_tags.article_id")->where("article_tags.tag_id", $requestTag)->orderBy("articles.created_at", "desc")->paginate(10)->appends(["tag" => $requestTag]);
+        }
+
 
         $tags = Tag::all();
         $articleTags = ArticleTag::all();
 
         $favoriteTags = DB::table("article_tags")->join("articles", "article_tags.article_id", "=", "articles.id")->join("tags", "article_tags.tag_id", "=", "tags.name")
-            ->select(DB::raw("SUM(articles.favorite_count) as total_favorite_count"), "tags.name as tag_name")->groupBy("tags.name")->orderBy("total_favorite_count", "desc")->limit(10)
-            ->get();
-
+        ->select(DB::raw("SUM(articles.favorite_count) as total_favorite_count"), "tags.name as tag_name")->groupBy("tags.name")->orderBy("total_favorite_count", "desc")->limit(10)
+        ->get();
 
         // bladeファイルの名前を指定して、compactで変数を渡す
         return view("home", compact("articles", "users", "tags", "articleTags", "favoriteTags"));
