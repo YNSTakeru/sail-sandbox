@@ -86,4 +86,14 @@ class ArticleController extends Controller
 
         return to_route("home");
     }
+
+    public function show($id)
+    {
+        $article = Article::find($id);
+        $user = User::find($article->user_id);
+        $tags = Tag::all();
+        $articleTags = ArticleTag::where("article_id", $id)->get();
+
+        return view("articles.show", compact("article", "user", "tags", "articleTags"));
+    }
 }
