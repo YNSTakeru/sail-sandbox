@@ -1,6 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const $tagInput = document.getElementById("tag-input");
 
+    const $tag = document.querySelectorAll(
+        ".tag-list .tag-pill .ion-close-round",
+    );
+
+    for (let i = 0; i < $tag.length; i++) {
+        $tag[i].parentElement.dataset.tag_name =
+            $tag[i].parentElement.textContent;
+        $tag[i].addEventListener("click", (e) => {
+            e.target.parentElement.remove();
+        });
+    }
+
     $tagInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -11,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const tagName = e.target.value;
 
-            // タグの追加
             const $tagList = document.querySelector(".tag-list");
 
             const $icon = document.createElement("i");

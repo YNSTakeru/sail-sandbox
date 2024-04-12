@@ -2,4 +2,4 @@
 
 <textarea {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'class' => 'form-control',
-]) !!}></textarea>
+]) !!}>{{ $slot }}</textarea>

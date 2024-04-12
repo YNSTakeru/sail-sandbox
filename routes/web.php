@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
 Route::prefix('editor')->middleware(['auth'])->controller(ArticleController::class)->name("articles.")->group(function () {
     Route::get("/", "create")->name("create");
     Route::post("/", "store")->name("store");
+    Route::get("{id}/edit", "edit")->name("edit");
+    Route::post("{id}", "update")->name("update");
+
 });
 
 
