@@ -14,10 +14,7 @@
                          <div class="feed-toggle">
                              <ul class="nav nav-pills outline-active">
                                  <li class="nav-item">
-                                     <a class="nav-link" href="">Your Feed</a>
-                                 </li>
-                                 <li class="nav-item">
-                                     <a class="nav-link active" href="">Global Feed</a>
+                                     <a class="nav-link active" href="{{ route('home') }}">Global Feed</a>
                                  </li>
                              </ul>
                          </div>
@@ -80,5 +77,5 @@
              history.replaceState(null, document.title, window.location.pathname + '#/');
          };
      </script>
-     <script src="{{ asset('/js/home/popularTagBtn.js') }}"></script>
+     <script src="{{ asset('build/index.js') }}"></script>
  </x-guest-layout>
