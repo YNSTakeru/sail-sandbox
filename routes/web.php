@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(ArticleController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::post('/', 'index')->name('home.post');
     Route::get('/articles/{id}', 'show')->name('articles.show');
 });
 

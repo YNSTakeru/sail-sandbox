@@ -62,7 +62,12 @@
 
                              <div class="tag-list">
                                  @foreach ($favoriteTags as $favoriteTag)
-                                     <button class="tag-pill tag-default">{{ $favoriteTag->tag_name }}</button>
+                                     <form method="POST"
+                                         action="{{ route('home.post', ['tag' => $favoriteTag->tag_name]) }}">
+                                         @csrf
+                                         <button type="submit"
+                                             class="tag-pill tag-default">{{ $favoriteTag->tag_name }}</button>
+                                     </form>
                                  @endforeach
                              </div>
                          </div>
@@ -72,10 +77,10 @@
          </div>
      </main>
      <script>
-         window.onload = function() {
-             window.location.hash = '#/';
-             history.replaceState(null, document.title, window.location.pathname + '#/');
-         };
+         //  window.onload = function() {
+         //      window.location.hash = '#/';
+         //      history.replaceState(null, document.title, window.location.pathname + '#/');
+         //  };
      </script>
      <script src="{{ asset('build/index.js') }}"></script>
  </x-guest-layout>

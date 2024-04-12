@@ -13,10 +13,15 @@ class ApiArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $tag = $request->tag;
-        $articles = Article::all();
+        $tag = $request->input("tag");
+        // Articleの記事をtagでフィルタリングする
+        if ($tag) {
+            $articles = Article::select("articles.*", "users.name as user_name", "article_tags.tag_id as tag_name")->join("users", "articles.user_id", "=", "users.id")->join("article_tags", "articles.id", "=", "article_tags.article_id")->where("article_tags.tag_id", $tag)->orderBy("articles.created_at", "desc")->paginate(10);
+        } else {
+            $articles = Article::all();
+        }
 
-        return response()->json($tag, 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json($articles, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
