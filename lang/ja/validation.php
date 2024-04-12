@@ -133,11 +133,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        "tags" => [
+            'unique_in_array' => 'タグが重複しています。'
+        ]
     ],
 
     'attributes' => [
         "name" => "名前",
         "email" => "メールアドレス",
+        'tags' => "タグ"
     ]
 
     /*

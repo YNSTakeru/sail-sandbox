@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
@@ -34,5 +35,55 @@ class ArticleController extends Controller
     public function create()
     {
         return view("articles.create");
+    }
+
+    public function store(Request $request)
+    {
+        $convertTags = json_decode($request->tags, true);
+
+        $request->merge([
+            "tags" => $convertTags,
+        ]);
+
+
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'abstract' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string', 'max:1000'],
+        ]);
+
+        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
+            return count($value) === count(array_unique($value));
+        });
+
+        // 配列のバリデーション
+        $request->validate([
+            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
+            'tags.*' => ['string', 'max:255'],
+        ]);
+
+        $tagModels = [];
+        foreach ($convertTags as $tag) {
+            $tagModel = Tag::firstOrCreate(["name" => $tag]);
+            $tagModels[] = $tagModel;
+        }
+
+        $article = Article::create([
+            "title" => $request->title,
+            "abstract" => $request->abstract,
+            "content" => $request->content,
+            "user_id" => $request->user_id,
+            "favorite_count" => 0,
+        ]);
+
+        // ArticleTagモデルを作成
+        foreach ($tagModels as $tagModel) {
+            ArticleTag::create([
+                "article_id" => $article->id,
+                "tag_id" => $tagModel->name,
+            ]);
+        }
+
+        return to_route("home");
     }
 }
