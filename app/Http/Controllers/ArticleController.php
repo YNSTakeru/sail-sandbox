@@ -109,4 +109,14 @@ class ArticleController extends Controller
 
         return view("articles.show", compact("article", "user", "tags", "articleTags"));
     }
+
+    public function edit($id)
+    {
+        $article = Article::find($id);
+
+
+        $tags = ArticleTag::where("article_id", $id)->get();
+
+        return view('articles.edit', compact('article', "tags"));
+    }
 }

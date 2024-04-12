@@ -20,9 +20,12 @@
                         &nbsp; Favorite Post <span class="counter">(29)</span>
                     </button>
                     @if (Auth::id() == $user->id)
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="ion-edit"></i> Edit Article
-                        </button>
+                        <form style="display: inline;" method="get"
+                            action="{{ route('articles.edit', ['id' => $article->id]) }}">
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="ion-edit"></i> Edit Article
+                            </button>
+                        </form>
                         <button class="btn btn-sm btn-outline-danger">
                             <i class="ion-trash-a"></i> Delete Article
                         </button>
