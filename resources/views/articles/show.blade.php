@@ -26,9 +26,13 @@
                                 <i class="ion-edit"></i> Edit Article
                             </button>
                         </form>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="ion-trash-a"></i> Delete Article
-                        </button>
+                        <form class="delete_{{ $article->id }}" style="display: inline;" method="post"
+                            action="{{ route('articles.destroy', ['id' => $article->id]) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="ion-trash-a"></i> Delete Article
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
@@ -67,12 +71,19 @@
                         &nbsp; Favorite Article <span class="counter">({{ $article->favorite_count }})</span>
                     </button>
                     @if (Auth::id() == $user->id)
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="ion-edit"></i> Edit Article
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="ion-trash-a"></i> Delete Article
-                        </button>
+                        <form style="display: inline;" method="get"
+                            action="{{ route('articles.edit', ['id' => $article->id]) }}">
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="ion-edit"></i> Edit Article
+                            </button>
+                        </form>
+                        <form class="delete_{{ $article->id }}" style="display: inline;" method="post"
+                            action="{{ route('articles.destroy', ['id' => $article->id]) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="ion-trash-a"></i> Delete Article
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
@@ -129,4 +140,16 @@
             </div>
         </div>
     </div>
+    <script>
+        const $deleteForms = document.querySelectorAll('.delete_{{ $article->id }}');
+
+        for (let i = 0; i < $deleteForms.length; i++) {
+            $deleteForms[i].addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (confirm('本当に削除しますか？')) {
+                    e.target.submit();
+                }
+            });
+        }
+    </script>
 </x-guest-layout>

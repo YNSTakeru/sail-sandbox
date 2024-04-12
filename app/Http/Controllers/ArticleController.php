@@ -162,4 +162,12 @@ class ArticleController extends Controller
 
         return to_route("articles.show", ["id" => $id]);
     }
+
+    public function destroy($id)
+    {
+        $article = Article::find($id);
+        $article->delete();
+
+        return to_route("home");
+    }
 }
