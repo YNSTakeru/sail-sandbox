@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\ArticleTag;
+use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -107,7 +108,9 @@ class ArticleController extends Controller
         $tags = Tag::all();
         $articleTags = ArticleTag::where("article_id", $id)->get();
 
-        return view("articles.show", compact("article", "user", "tags", "articleTags"));
+        $comments = Comment::where("article_id", $id)->join("users", "comments.user_id", "=", "users.id")->select("comments.*", "users.name as user_name", "users.avatar as user_avatar") ->orderBy("created_at", "desc")->get();
+
+        return view("articles.show", compact("article", "user", "tags", "articleTags", "comments"));
     }
 
     public function edit($id)
