@@ -26,9 +26,11 @@
 
                              <div class="article-preview">
                                  <div class="article-meta">
-                                     <a href="/profile/eric-simons"><img src={{ $user->avatar }} /></a>
+                                     <a href="{{ route('profile', ['id' => $user->id]) }}"><img
+                                             src={{ $user->avatar }} /></a>
                                      <div class="info">
-                                         <a href="/profile/eric-simons" class="author"> {{ $user->name }} </a>
+                                         <a href="{{ route('profile', ['id' => $user->id]) }}" class="author">
+                                             {{ $user->name }} </a>
                                          <span class="date">{{ $article->created_at }}</span>
                                      </div>
                                      <button class="btn btn-outline-primary btn-sm pull-xs-right">

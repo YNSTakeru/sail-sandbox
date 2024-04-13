@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Article;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +58,13 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function index($id)
+    {
+        $user = User::find($id);
+        $articles = Article::where('user_id', $id)->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('profile', compact("user", "articles"));
     }
 }
