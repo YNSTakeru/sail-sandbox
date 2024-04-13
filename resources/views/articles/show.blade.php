@@ -91,13 +91,17 @@
             <div class="row">
                 @if (Auth::check())
                     <div class="col-xs-12 col-md-8 offset-md-2">
-                        <form class="card comment-form">
+                        <form class="card comment-form" method="post"
+                            action="{{ route('comments.store', ['id' => $article->id]) }}">
+                            @csrf
                             <div class="card-block">
-                                <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                                <textarea class="form-control" placeholder="Write a comment..." rows="3" name="content"></textarea>
                             </div>
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="article_id" value="{{ $article->id }}">
                             <div class="card-footer">
                                 <img src="{{ $user->avatar }}" />
-                                <button class="btn btn-sm btn-primary">Post Comment</button>
+                                <button class="btn btn-sm btn-primary" type="submit">Post Comment</button>
                             </div>
                         </form>
 
