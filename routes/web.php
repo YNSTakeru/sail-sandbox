@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,11 @@ Route::controller(ArticleController::class)->group(function () {
     Route::post('/', 'index')->name('home.post');
     Route::get('/articles/{id}', 'show')->name('articles.show');
 });
+
+Route::middleware(['auth'])->controller(CommentController::class)->group(function () {
+    Route::post('/articles/{id}', 'store')->name('comments.store');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -26,8 +32,9 @@ Route::prefix('editor')->middleware(['auth'])->controller(ArticleController::cla
     Route::get("{id}/edit", "edit")->name("edit");
     Route::post("{id}", "update")->name("update");
     Route::post("/{id}/destroy", "destroy")->name("destroy");
-
 });
+
+
 
 
 require __DIR__.'/auth.php';
