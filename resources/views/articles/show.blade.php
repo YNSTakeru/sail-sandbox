@@ -44,7 +44,12 @@
                     <p data-article_content="{{ $article->content }}"></p>
                     <ul class="tag-list">
                         @foreach ($articleTags as $articleTag)
-                            <li class="tag-default tag-pill tag-outline">{{ $articleTag->tag_id }}</li>
+                            <form style="display: inline;" method="POST"
+                                action="{{ route('home.post', ['tag' => $articleTag->tag_id]) }}">
+                                @csrf
+                                <button type="submit"
+                                    class="tag-default tag-pill tag-outline">{{ $articleTag->tag_id }}</button>
+                            </form>
                         @endforeach
                     </ul>
                 </div>
