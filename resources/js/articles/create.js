@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if ($tags) {
         let tags = JSON.parse($tags.value);
 
-        if (tags[0]["article_id"] !== undefined) {
+        if (!tags) return;
+
+        if (tags[0] && tags[0]["article_id"] !== undefined) {
             tags = tags.map((tag) => tag.tag_id);
         }
 
