@@ -16,23 +16,23 @@
                         <fieldset>
                             <fieldset class="form-group">
                                 <input class="form-control" type="text" placeholder="URL of profile picture"
-                                    @if ($user->avatar) value="{{ $user->avatar }}" @endif
+                                    @if ($user->avatar) value="{{ old('avatar', $user->avatar) }}" @endif
                                     name="avatar" />
                             </fieldset>
                             <fieldset class="form-group">
                                 <input class="form-control form-control-lg" type="text" placeholder="Your Name"
-                                    value="{{ $user->name }}" name="name" />
+                                    value="{{ old('name', $user->name) }}" name="name" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you" name="bio">{{ $profile->bio }}</textarea>
+                                <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you" name="bio">{{ old('bio', $profile->bio) }}</textarea>
                             </fieldset>
                             <fieldset class="form-group">
                                 <input class="form-control form-control-lg" type="text" placeholder="Email"
-                                    value="{{ $user->email }}" name="email" />
+                                    value="{{ old('email', $user->email) }}" name="email" />
                             </fieldset>
                             <fieldset class="form-group">
                                 <input class="form-control form-control-lg" type="password" placeholder="New Password"
-                                    value="" name="password" />
+                                    value="{{ old('password') }}" name="password" />
                             </fieldset>
                             <x-primary-button class="pull-xs-right">Update Settings</x-primary-button>
                         </fieldset>

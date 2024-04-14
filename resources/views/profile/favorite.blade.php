@@ -35,12 +35,11 @@
                     <div class="articles-toggle">
                         <ul class="nav nav-pills outline-active">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('profile', ['id' => $user->id]) }}">My
+                                <a class="nav-link" href="{{ route('profile', ['id' => $user->id]) }}">My
                                     Articles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.favorite', ['id' => $user->id]) }}">
-                                    {{-- 後ほど設定 --}}
+                                <a class="nav-link active" href="{{ route('profile.favorite', ['id' => $user->id]) }}">
                                     Favorited Articles
                                 </a>
                             </li>
