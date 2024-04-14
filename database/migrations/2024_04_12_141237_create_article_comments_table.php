@@ -4,18 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('article_tags', function (Blueprint $table) {
+        Schema::create('article_comments', function (Blueprint $table) {
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
-            $table->string('tag_id');
-            $table->foreign('tag_id')->references('name')->on('tags')->onDelete('cascade');
-            $table->primary(['article_id', 'tag_id']);
+            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
+            $table->primary(['article_id', 'comment_id']);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_tags');
+        Schema::dropIfExists('article_comments');
     }
 };
