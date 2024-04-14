@@ -29,7 +29,7 @@
                                 </div>
                             </fieldset>
                             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <input id="tags" type="hidden" name="tags" value="{{ old('tags') }}">
+                            <input id="tags" type="hidden" name="tags" value="{{ json_encode(old('tags')) }}">
                             <x-primary-button class="pull-xs-right">
                                 Publish Article
                             </x-primary-button>
