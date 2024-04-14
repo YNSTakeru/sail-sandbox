@@ -11,11 +11,11 @@ class CommentController extends Controller
     {
 
         $request->validate([
-            "content" => "required|string|max:255",
+            "comment" => "required|string|max:255",
         ]);
 
         $comment = new Comment();
-        $comment->content = $request->content;
+        $comment->content = $request->comment;
         $comment->user_id = $request->user()->id;
         $comment->article_id = $request->id;
         $comment->save();
