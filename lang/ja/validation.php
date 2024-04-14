@@ -141,7 +141,11 @@ return [
     'attributes' => [
         "name" => "名前",
         "email" => "メールアドレス",
-        'tags' => "タグ"
+        'tags' => "タグ",
+        "title" => "記事タイトル",
+        "content" => "記事内容",
+        "abstract" => "記事概要",
+        "comment" => "コメント",
     ]
 
     /*
