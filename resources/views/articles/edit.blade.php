@@ -26,13 +26,11 @@
                             <fieldset class="form-group">
                                 <x-text-input id="tag-input" type="text" placeholder="Enter tags" />
                                 <div class="tag-list">
-                                    @foreach ($tags as $tag)
-                                        <span class="tag-default tag-pill"> <i class="ion-close-round"></i>
-                                            {{ $tag->tag_id }} </span>
-                                    @endforeach
                                 </div>
                             </fieldset>
                             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                            <input id="tags" type="hidden" name="tags"
+                                value="{{ json_encode(old('tags', $tags)) }}">
                             <x-primary-button class="pull-xs-right">
                                 Update Article
                             </x-primary-button>
