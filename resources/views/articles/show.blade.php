@@ -41,8 +41,7 @@
         <div class="container page">
             <div class="row article-content">
                 <div class="col-md-12">
-                    {{-- markdownを投稿できるように変更 --}}
-                    <p>{{ $article->content }}</p>
+                    <p data-article_content="{{ $article->content }}"></p>
                     <ul class="tag-list">
                         @foreach ($articleTags as $articleTag)
                             <li class="tag-default tag-pill tag-outline">{{ $articleTag->tag_id }}</li>
@@ -128,13 +127,22 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        const $deleteForms = document.querySelectorAll('.delete_{{ $article->id }}');
+        const content = document
+            .querySelector("[data-article_content]")
+            .getAttribute("data-article_content");
+
+        const htmlText = marked.parse(content);
+
+        document.querySelector(".article-content p").innerHTML = htmlText;
+
+        const $deleteForms = document.querySelectorAll(".delete_{{ $article->id }}");
 
         for (let i = 0; i < $deleteForms.length; i++) {
-            $deleteForms[i].addEventListener('submit', (e) => {
+            $deleteForms[i].addEventListener("submit", (e) => {
                 e.preventDefault();
-                if (confirm('本当に削除しますか？')) {
+                if (confirm("本当に削除しますか？")) {
                     e.target.submit();
                 }
             });
