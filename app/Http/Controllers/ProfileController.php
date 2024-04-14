@@ -33,21 +33,24 @@ class ProfileController extends Controller
     {
 
 
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            "bio" => ["string", "max:255", "nullable"],
-            "avatar" => ["url", "max:255", "nullable"],
-        ]);
-
         $user = User::find(Auth::id());
-        $user->email = $request->email;
 
         if($user->email !== $request->email) {
             $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                "bio" => ["string", "max:255", "nullable"],
+                "avatar" => ["url", "max:255", "nullable"],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             ]);
+        } else {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                "bio" => ["string", "max:255", "nullable"],
+                "avatar" => ["url", "max:255", "nullable"],
+            ]);
         }
+
+        $user->email = $request->email;
 
         $user->name = $request->name;
         if($request->password) {
