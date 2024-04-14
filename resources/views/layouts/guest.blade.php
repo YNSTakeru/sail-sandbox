@@ -34,7 +34,7 @@
                             <a class="nav-link" href="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile/eric-simons">
+                            <a class="nav-link" href="{{ route('profile', ['id' => Auth::id()]) }}">
                                 <img src="" class="user-pic" />
                                 {{ Auth::user()->name }}
                             </a>

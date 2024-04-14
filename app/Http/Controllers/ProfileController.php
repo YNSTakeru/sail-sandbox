@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -27,17 +29,40 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            "bio" => ["string", "max:255", "nullable"],
+            "avatar" => ["url", "max:255", "nullable"],
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->email = $request->email;
+
+        if($user->email !== $request->email) {
+            $request->validate([
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            ]);
         }
 
-        $request->user()->save();
+        $user->name = $request->name;
+        if($request->password) {
+            $user->password = Hash::make($request->password);
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $profile = Profile::where('user_id', $user->id)->first();
+
+
+        $profile->bio = $request->bio;
+        $user->save();
+        $profile->save();
+
+
+        return to_route("settings");
     }
 
     /**
@@ -68,6 +93,19 @@ class ProfileController extends Controller
 
         $articleTags = Article::select("article_tags.*")->where('user_id', $id)->orderBy('created_at', 'desc')->join('article_tags', 'articles.id', '=', 'article_tags.article_id')->get();
 
-        return view('profile', compact("user", "articles", "articleTags"));
+        $profile = Profile::where('user_id', $id)->first();
+
+        return view('profile', compact("user", "articles", "articleTags", "profile"));
     }
+
+    public function show()
+    {
+
+        $user = User::find(Auth::id());
+        $profile = Profile::where('user_id', Auth::id())->first();
+
+        return view('settings', compact("user", "profile"));
+    }
+
+
 }
