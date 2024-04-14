@@ -23,7 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if ($tags) {
-        const tags = JSON.parse($tags.value);
+        let tags = JSON.parse($tags.value);
+
+        if (tags[0]["article_id"] !== undefined) {
+            tags = tags.map((tag) => tag.tag_id);
+        }
+
+        if (typeof tags === "string") {
+            tags = JSON.parse(tags);
+        }
 
         const $tagList = document.querySelector(".tag-list");
 
