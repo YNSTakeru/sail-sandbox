@@ -5,33 +5,43 @@
                 <div class="col-md-6 offset-md-3 col-xs-12">
                     <h1 class="text-xs-center">Your Settings</h1>
 
-                    <ul class="error-messages">
-                        <li>That name is required</li>
-                    </ul>
+                    <x-input-error :messages="$errors->get('avatar')"></x-input-error>
+                    <x-input-error :messages="$errors->get('name')"></x-input-error>
+                    <x-input-error :messages="$errors->get('bio')"></x-input-error>
+                    <x-input-error :messages="$errors->get('email')"></x-input-error>
+                    <x-input-error :messages="$errors->get('password')"></x-input-error>
 
-                    <form>
+                    <form method="POST" action="{{ route('profile.update') }}">
+                        @csrf
                         <fieldset>
                             <fieldset class="form-group">
-                                <input class="form-control" type="text" placeholder="URL of profile picture" />
+                                <input class="form-control" type="text" placeholder="URL of profile picture"
+                                    @if ($user->avatar) value="{{ $user->avatar }}" @endif
+                                    name="avatar" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <input class="form-control form-control-lg" type="text" placeholder="Your Name" />
+                                <input class="form-control form-control-lg" type="text" placeholder="Your Name"
+                                    value="{{ $user->name }}" name="name" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you"></textarea>
+                                <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you" name="bio">{{ $profile->bio }}</textarea>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input class="form-control form-control-lg" type="text" placeholder="Email" />
+                                <input class="form-control form-control-lg" type="text" placeholder="Email"
+                                    value="{{ $user->email }}" name="email" />
                             </fieldset>
                             <fieldset class="form-group">
-                                <input class="form-control form-control-lg" type="password"
-                                    placeholder="New Password" />
+                                <input class="form-control form-control-lg" type="password" placeholder="New Password"
+                                    value="" name="password" />
                             </fieldset>
-                            <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+                            <x-primary-button class="pull-xs-right">Update Settings</x-primary-button>
                         </fieldset>
                     </form>
                     <hr />
-                    <button class="btn btn-outline-danger">Or click here to logout.</button>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">Or click here to logout.</button>
+                    </form>
                 </div>
             </div>
         </div>
