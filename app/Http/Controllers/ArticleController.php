@@ -7,6 +7,7 @@ use App\Models\ArticleTag;
 use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\UserFavoriteArticles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -98,6 +99,7 @@ class ArticleController extends Controller
             ]);
         }
 
+
         return to_route("home");
     }
 
@@ -179,5 +181,29 @@ class ArticleController extends Controller
         $article->delete();
 
         return to_route("home");
+    }
+
+    public function updateFavorite(Request $request, $id, $user_id)
+    {
+        $article = Article::find($id);
+        $favoriteArticles = UserFavoriteArticles::where("user_id", $user_id)->where("article_id", $id)->first();
+
+        if($favoriteArticles !== null) {
+            $article->favorite_count = $article->favorite_count - 1;
+
+            DB::table("user_favorite_articles")->where("user_id", $user_id)->where("article_id", $id)->delete();
+        } else {
+            $article->favorite_count = $article->favorite_count + 1;
+            UserFavoriteArticles::create([
+                "user_id" => $user_id,
+                "article_id" => $id,
+            ]);
+        }
+
+
+        $article->save();
+
+        // ページの更新
+        return back();
     }
 }

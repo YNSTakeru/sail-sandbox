@@ -13,15 +13,15 @@
                         <fieldset>
                             <fieldset class="form-group">
                                 <x-text-input type="text" class="form-control-lg" placeholder="Article Title"
-                                    value="{{ $article->title }}" name="title" />
+                                    value="{{ old('title', $article->title) }}" name="title" />
                             </fieldset>
                             <fieldset class="form-group">
                                 <x-text-input type="text" placeholder="What's this article about?"
-                                    value="{{ $article->abstract }}" name="abstract" />
+                                    value="{{ old('abstract', $article->abstract) }}" name="abstract" />
                             </fieldset>
                             <fieldset class="form-group">
                                 <x-textarea rows="8" placeholder="Write your article (in markdown)"
-                                    name="content">{{ $article->content }}</x-textarea>
+                                    name="content">{{ old('content', $article->content) }}</x-textarea>
                             </fieldset>
                             <fieldset class="form-group">
                                 <x-text-input id="tag-input" type="text" placeholder="Enter tags" />
