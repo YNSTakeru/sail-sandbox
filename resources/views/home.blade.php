@@ -33,9 +33,14 @@
                                              {{ $user->name }} </a>
                                          <span class="date">{{ $article->created_at }}</span>
                                      </div>
-                                     <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                                         <i class="ion-heart"></i> {{ $article->favorite_count }}
-                                     </button>
+                                     <form style="display:inline;"
+                                         action="{{ route('articles.favorite', ['id' => $article->id]) }}"
+                                         method="POST">
+                                         @csrf
+                                         <button class="btn btn-outline-primary btn-sm pull-xs-right">
+                                             <i class="ion-heart"></i> {{ $article->favorite_count }}
+                                         </button>
+                                     </form>
                                  </div>
                                  <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="preview-link">
                                      <h1>{{ $article->title }}</h1>

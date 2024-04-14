@@ -180,4 +180,13 @@ class ArticleController extends Controller
 
         return to_route("home");
     }
+
+    public function updateFavorite($id)
+    {
+        $article = Article::find($id);
+        $article->favorite_count = $article->favorite_count + 1;
+        $article->save();
+
+        return to_route("home");
+    }
 }

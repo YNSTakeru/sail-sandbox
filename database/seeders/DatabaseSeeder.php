@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ArticleTagSeeder::class,
             ProfileSeeder::class,
+            UserFavoriteArticlesSeeder::class,
         ]);
         Comment::factory(1000)->create();
 

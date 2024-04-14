@@ -41,4 +41,8 @@ Route::middleware(['auth'])->controller(CommentController::class)->group(functio
     Route::post('/articles/{id}', 'store')->name('comments.store');
 });
 
+Route::middleware(['auth'])->controller(ArticleController::class)->name("articles.")->group(function () {
+    Route::post("/articles/{id}/favorite", "updateFavorite")->name("favorite");
+});
+
 require __DIR__.'/auth.php';
