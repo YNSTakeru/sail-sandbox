@@ -16,6 +16,7 @@ Route::controller(ArticleController::class)->group(function () {
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile/{id}', 'index')->name('profile');
     Route::middleware(['auth'])->get('/settings', 'show')->name('settings');
+    Route::get("profile/{id}/favorite", "favoriteIndex")->name("profile.favorite");
 });
 
 

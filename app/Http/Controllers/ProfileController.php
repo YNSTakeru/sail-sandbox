@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\UserFavoriteArticles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -110,5 +111,20 @@ class ProfileController extends Controller
         return view('settings', compact("user", "profile"));
     }
 
+    public function favoriteIndex($id)
+    {
+        $user = User::find($id);
+
+        $articlesQuery = UserFavoriteArticles::where('user_favorite_articles.user_id', $id)->join('articles', 'user_favorite_articles.article_id', '=', 'articles.id')->select('articles.*');
+
+        $articles = $articlesQuery->orderBy('created_at', 'desc')->paginate(10);
+
+
+        $articleTags = $articlesQuery->where('articles.user_id', $id)->orderBy('created_at', 'desc')->join('article_tags', 'articles.id', '=', 'article_tags.article_id')->get();
+
+        $profile = Profile::where('user_id', $id)->first();
+
+        return view('profile.favorite', compact("user", "articles", "articleTags", "profile"));
+    }
 
 }

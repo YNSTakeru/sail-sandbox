@@ -99,6 +99,7 @@ class ArticleController extends Controller
             ]);
         }
 
+
         return to_route("home");
     }
 
@@ -199,9 +200,10 @@ class ArticleController extends Controller
             ]);
         }
 
+
         $article->save();
 
-
-        return to_route("home");
+        // ページの更新
+        return back();
     }
 }
