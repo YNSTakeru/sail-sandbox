@@ -4,6 +4,7 @@
 composer install
 ./vendor/bin/sail up -d
 sail artisan migrate:fresh --seed
+npm run build
 ```
 
 [localhost](localhost)にアクセス

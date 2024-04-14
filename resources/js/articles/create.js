@@ -1,6 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
     const $tagInput = document.getElementById("tag-input");
 
+    const $tags = document.getElementById("tags");
+
+    function createTag(tagName, $tagList) {
+        const $icon = document.createElement("i");
+        $icon.classList.add("ion-close-round");
+
+        $icon.addEventListener("click", (e) => {
+            e.target.parentElement.remove();
+        });
+
+        const $tagPill = document.createElement("span");
+        $tagPill.classList.add("tag-default", "tag-pill");
+
+        $tagPill.dataset.tag_name = tagName;
+
+        $tagPill.appendChild($icon);
+        $tagPill.appendChild(document.createTextNode(tagName));
+
+        $tagList.appendChild($tagPill);
+    }
+
+    if ($tags) {
+        const tags = JSON.parse($tags.value);
+
+        const $tagList = document.querySelector(".tag-list");
+
+        tags.forEach((tag) => {
+            createTag(tag, $tagList);
+        });
+    }
+
     const $tag = document.querySelectorAll(
         ".tag-list .tag-pill .ion-close-round",
     );
@@ -25,22 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const $tagList = document.querySelector(".tag-list");
 
-            const $icon = document.createElement("i");
-            $icon.classList.add("ion-close-round");
-
-            $icon.addEventListener("click", (e) => {
-                e.target.parentElement.remove();
-            });
-
-            const $tagPill = document.createElement("span");
-            $tagPill.classList.add("tag-default", "tag-pill");
-
-            $tagPill.dataset.tag_name = tagName;
-
-            $tagPill.appendChild($icon);
-            $tagPill.appendChild(document.createTextNode(tagName));
-
-            $tagList.appendChild($tagPill);
+            createTag(tagName, $tagList);
 
             e.target.value = "";
         }
