@@ -11,8 +11,9 @@ Route::controller(ArticleController::class)->group(function () {
     Route::get('/articles/{id}', 'show')->name('articles.show');
 });
 
-Route::middleware(['auth'])->controller(CommentController::class)->group(function () {
-    Route::post('/articles/{id}', 'store')->name('comments.store');
+
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile/{id}', 'index')->name('profile');
 });
 
 
@@ -20,11 +21,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 Route::prefix('editor')->middleware(['auth'])->controller(ArticleController::class)->name("articles.")->group(function () {
     Route::get("/", "create")->name("create");
@@ -34,7 +35,8 @@ Route::prefix('editor')->middleware(['auth'])->controller(ArticleController::cla
     Route::post("/{id}/destroy", "destroy")->name("destroy");
 });
 
-
-
+Route::middleware(['auth'])->controller(CommentController::class)->group(function () {
+    Route::post('/articles/{id}', 'store')->name('comments.store');
+});
 
 require __DIR__.'/auth.php';

@@ -5,9 +5,9 @@
                 <h1>{{ $article->title }}</h1>
 
                 <div class="article-meta">
-                    <a href="/profile/eric-simons"><img src="{{ $user->avatar }}" /></a>
+                    <a href="{{ route('profile', ['id' => $user->id]) }}"><img src="{{ $user->avatar }}" /></a>
                     <div class="info">
-                        <a href="/profile/eric-simons" class="author">{{ $user->name }}</a>
+                        <a href="{{ route('profile', ['id' => $user->id]) }}" class="author">{{ $user->name }}</a>
                         <span class="date">{{ $article->created_at }}</span>
                     </div>
                     <button class="btn btn-sm btn-outline-secondary">
@@ -59,9 +59,9 @@
 
             <div class="article-actions">
                 <div class="article-meta">
-                    <a href="profile.html"><img src="{{ $user->avatar }}" /></a>
+                    <a href="{{ route('profile', ['id' => $user->id]) }}"><img src="{{ $user->avatar }}" /></a>
                     <div class="info">
-                        <a href="" class="author">{{ $user->name }}</a>
+                        <a href="{{ route('profile', ['id' => $user->id]) }}" class="author">{{ $user->name }}</a>
                         <span class="date">{{ $article->created_at }}</span>
                     </div>
 
@@ -117,11 +117,12 @@
                                     </p>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="/profile/author" class="comment-author">
+                                    <a href="{{ route('profile', ['id' => $comment->user_id]) }}"
+                                        class="comment-author">
                                         <img src="{{ $comment->user_avatar }}" class="comment-author-img" />
                                     </a>
                                     &nbsp;
-                                    <a href="/profile/jacob-schmidt"
+                                    <a href="{{ route('profile', ['id' => $comment->user_id]) }}"
                                         class="comment-author">{{ $comment->user_name }}</a>
                                     <span class="date-posted">{{ $comment->created_at }}</span>
                                 </div>
