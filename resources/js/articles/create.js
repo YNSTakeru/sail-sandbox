@@ -22,37 +22,41 @@ document.addEventListener("DOMContentLoaded", function () {
         $tagList.appendChild($tagPill);
     }
 
-    if ($tags) {
-        let tags = JSON.parse($tags.value);
+    function createTags($tags) {
+        if ($tags) {
+            let tags = JSON.parse($tags.value);
 
-        if (!tags) return;
+            if (!tags) return;
 
-        if (tags[0] && tags[0]["article_id"] !== undefined) {
-            tags = tags.map((tag) => tag.tag_id);
+            if (tags[0] && tags[0]["article_id"] !== undefined) {
+                tags = tags.map((tag) => tag.tag_id);
+            }
+
+            if (typeof tags === "string") {
+                tags = JSON.parse(tags);
+            }
+
+            const $tagList = document.querySelector(".tag-list");
+
+            tags.forEach((tag) => {
+                createTag(tag, $tagList);
+            });
         }
 
-        if (typeof tags === "string") {
-            tags = JSON.parse(tags);
+        const $tag = document.querySelectorAll(
+            ".tag-list .tag-pill .ion-close-round",
+        );
+
+        for (let i = 0; i < $tag.length; i++) {
+            $tag[i].parentElement.dataset.tag_name =
+                $tag[i].parentElement.textContent;
+            $tag[i].addEventListener("click", (e) => {
+                e.target.parentElement.remove();
+            });
         }
-
-        const $tagList = document.querySelector(".tag-list");
-
-        tags.forEach((tag) => {
-            createTag(tag, $tagList);
-        });
     }
 
-    const $tag = document.querySelectorAll(
-        ".tag-list .tag-pill .ion-close-round",
-    );
-
-    for (let i = 0; i < $tag.length; i++) {
-        $tag[i].parentElement.dataset.tag_name =
-            $tag[i].parentElement.textContent;
-        $tag[i].addEventListener("click", (e) => {
-            e.target.parentElement.remove();
-        });
-    }
+    createTags($tags);
 
     $tagInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
