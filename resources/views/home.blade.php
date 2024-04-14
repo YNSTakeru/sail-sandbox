@@ -33,14 +33,21 @@
                                              {{ $user->name }} </a>
                                          <span class="date">{{ $article->created_at }}</span>
                                      </div>
-                                     <form style="display:inline;"
-                                         action="{{ route('articles.favorite', ['id' => $article->id]) }}"
-                                         method="POST">
-                                         @csrf
+                                     @if (Auth::check())
+                                         <form style="display:inline;"
+                                             action="{{ route('articles.favorite', ['id' => $article->id, 'user_id' => Auth::user()->id]) }}"
+                                             method="POST">
+                                             @csrf
+                                             <button class="btn btn-outline-primary btn-sm pull-xs-right">
+                                                 <i class="ion-heart"></i> {{ $article->favorite_count }}
+                                             </button>
+                                         </form>
+                                     @else
                                          <button class="btn btn-outline-primary btn-sm pull-xs-right">
                                              <i class="ion-heart"></i> {{ $article->favorite_count }}
                                          </button>
-                                     </form>
+                                     @endif
+
                                  </div>
                                  <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="preview-link">
                                      <h1>{{ $article->title }}</h1>

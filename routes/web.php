@@ -42,7 +42,7 @@ Route::middleware(['auth'])->controller(CommentController::class)->group(functio
 });
 
 Route::middleware(['auth'])->controller(ArticleController::class)->name("articles.")->group(function () {
-    Route::post("/articles/{id}/favorite", "updateFavorite")->name("favorite");
+    Route::post("/articles/{id}/favorite/{user_id}", "updateFavorite")->name("favorite");
 });
 
 require __DIR__.'/auth.php';
