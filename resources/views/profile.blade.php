@@ -7,19 +7,23 @@
                         <img src="{{ $user->avatar }}" class="user-img" />
                         <h4>{{ $user->name }}</h4>
                         <p>
-                            {{-- 後ほどsettingsで設定 --}}
-                            Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from
-                            the Hunger Games
+                            {{ $profile->bio }}
                         </p>
-                        <button class="btn btn-sm btn-outline-secondary action-btn">
-                            <i class="ion-plus-round"></i>
-                            &nbsp; Follow {{ $user->name }}
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary action-btn">
-                            <i class="ion-gear-a"></i>
-                            {{-- 後ほどsettingsで設定 --}}
-                            &nbsp; Edit Profile Settings
-                        </button>
+                        @if (Auth::id() != $user->id)
+                            <button class="btn btn-sm btn-outline-secondary action-btn">
+                                <i class="ion-plus-round"></i>
+                                &nbsp; Follow {{ $user->name }}
+                            </button>
+                        @endif
+                        @if (Auth::id() == $user->id)
+                            <form method="GET" action="/settings">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-secondary action-btn">
+                                    <i class="ion-gear-a"></i>
+                                    &nbsp; Edit Profile Settings
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

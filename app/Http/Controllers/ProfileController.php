@@ -93,7 +93,9 @@ class ProfileController extends Controller
 
         $articleTags = Article::select("article_tags.*")->where('user_id', $id)->orderBy('created_at', 'desc')->join('article_tags', 'articles.id', '=', 'article_tags.article_id')->get();
 
-        return view('profile', compact("user", "articles", "articleTags"));
+        $profile = Profile::where('user_id', $id)->first();
+
+        return view('profile', compact("user", "articles", "articleTags", "profile"));
     }
 
     public function show()
