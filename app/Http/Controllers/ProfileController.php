@@ -70,4 +70,9 @@ class ProfileController extends Controller
 
         return view('profile', compact("user", "articles", "articleTags"));
     }
+
+    public function show()
+    {
+        return view('settings');
+    }
 }
