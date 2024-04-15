@@ -28,4 +28,21 @@ class ArticleControllerEditTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function testCanNotFetchTheArticle():void
+    {
+        $user = User::factory()->create();
+        $article = Article::factory()->create();
+        $tag = Tag::factory()->create();
+        $tags = ArticleTag::factory()->create([
+            "article_id" => $article->id,
+            "tag_id" => $tag->name
+        ]);
+
+        $route = route('articles.edit', ['id' => 2, 'article' => $article, 'tags' => $tags]);
+
+        $response = $this->getJson($route);
+
+        $response->assertUnauthorized();
+    }
 }
