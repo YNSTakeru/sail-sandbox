@@ -27,6 +27,7 @@ class ArticleControllerIndexTest extends TestCase
         $route = route('home');
 
         $response = $this->actingAs($user)->getJson($route);
+
         $response->assertOk();
     }
 }

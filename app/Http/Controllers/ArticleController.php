@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Comment;
@@ -26,8 +27,6 @@ class ArticleController extends Controller
             $articles = Article::select("articles.*", "users.name as user_name")
             ->join("users", "articles.user_id", "=", "users.id")->orderBy("articles.created_at", "desc")
             ->paginate(10);
-
-
         }
 
         if($requestTag) {
@@ -52,33 +51,11 @@ class ArticleController extends Controller
         return view("articles.create");
     }
 
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $convertTags = json_decode($request->tags, true);
-
-        $request->merge([
-            "tags" => $convertTags,
-        ]);
-
-
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'abstract' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:1000'],
-        ]);
-
-        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
-            return count($value) === count(array_unique($value));
-        });
-
-        // 配列のバリデーション
-        $request->validate([
-            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
-            'tags.*' => ['string', 'max:255'],
-        ]);
-
+        $tags = $request->tags;
         $tagModels = [];
-        foreach ($convertTags as $tag) {
+        foreach ($tags as $tag) {
             $tagModel = Tag::firstOrCreate(["name" => $tag]);
             $tagModels[] = $tagModel;
         }
