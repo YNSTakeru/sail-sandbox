@@ -2,6 +2,7 @@
 
 ```bash
 composer install
+cp .env.example .env
 ./vendor/bin/sail up -d
 sail artisan migrate:fresh --seed
 npm run build
