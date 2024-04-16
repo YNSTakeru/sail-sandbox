@@ -22,4 +22,9 @@ class Article extends Model
     {
         return Carbon::parse($value)->format('Y年m月d日');
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, "user_id");
+    }
 }
