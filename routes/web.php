@@ -34,7 +34,7 @@ Route::prefix('editor')->middleware(['auth'])->controller(ArticleController::cla
     Route::get("/", "create")->name("create");
     Route::post("/", "store")->name("store");
     Route::get("{id}/edit", "edit")->name("edit");
-    Route::post("{id}", "update")->name("update");
+    Route::put("{id}", "update")->name("update");
     Route::post("/{id}/destroy", "destroy")->name("destroy");
 });
 

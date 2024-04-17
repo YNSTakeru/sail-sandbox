@@ -53,6 +53,10 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
+        if(auth()->guest()) {
+            return response()->json(["error" => "Unauthorized"], 401);
+        }
+
         $tags = $request->tags;
         $tagModels = [];
         foreach ($tags as $tag) {
@@ -102,31 +106,18 @@ class ArticleController extends Controller
         return view('articles.edit', compact('article', "tags"));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreArticleRequest $request, $id)
     {
 
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'abstract' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:1000'],
-        ]);
+        if(auth()->guest()) {
+            return response()->json(["error" => "Unauthorized"], 401);
+        }
 
-        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
-            return count($value) === count(array_unique($value));
-        });
+        if(auth()->user()->id !== (int)$request->user_id) {
+            return response()->json(["error" => "Forbidden"], 403);
+        }
 
-        $convertTags = json_decode($request->tags, true);
-
-
-        $request->merge([
-            "tags" => $convertTags,
-        ]);
-
-        $request->validate([
-            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
-            'tags.*' => ['string', 'max:255'],
-        ]);
-
+        $tags = $request->tags;
 
         $article = Article::find($id);
         $article->title = $request->title;
@@ -135,7 +126,7 @@ class ArticleController extends Controller
         $article->save();
 
         $tagModels = [];
-        foreach ($convertTags as $tag) {
+        foreach ($tags as $tag) {
             $tagModel = Tag::firstOrCreate(["name" => $tag]);
             $tagModels[] = $tagModel;
         }
