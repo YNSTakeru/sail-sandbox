@@ -93,7 +93,10 @@ class ArticleController extends Controller
 
         $comments = Comment::where("article_id", $id)->join("users", "comments.user_id", "=", "users.id")->select("comments.*", "users.name as user_name", "users.avatar as user_avatar") ->orderBy("created_at", "desc")->get();
 
-        return view("articles.show", compact("article", "user", "tags", "articleTags", "comments"));
+        $favoriteArticlesCount = UserFavoriteArticles::where("user_id", $article->user_id)->count();
+
+
+        return view("articles.show", compact("article", "user", "tags", "articleTags", "comments", "favoriteArticlesCount"));
     }
 
     public function edit($id)
