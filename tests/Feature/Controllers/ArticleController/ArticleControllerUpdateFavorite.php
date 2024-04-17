@@ -40,4 +40,22 @@ class ArticleControllerUpdateFavoriteTest extends TestCase
 
         $this->assertEquals(0, $article->refresh()->favorite_count);
     }
+
+    public function testCanUpdateAlreadyFavorite():void
+    {
+        $user = User::factory()->create();
+        $article = Article::factory()->for($user, "author")->create();
+
+        $route = route("articles.updateFavorite", ["id" => $article->id, "user_id", $user->id]);
+
+        $response = $this->actingAs($user)->postJson($route, []);
+
+        $response = $this->actingAs($user)->postJson($route, []);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseMissing("user_favorite_articles", ["user_id" => $user->id, "article_id" => $article->id]);
+
+        $this->assertEquals(0, $article->refresh()->favorite_count);
+    }
 }
