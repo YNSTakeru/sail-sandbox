@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\StoreProfileRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Profile;
@@ -30,30 +31,16 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request)
+    public function update(StoreProfileRequest $request)
     {
-
-
         $user = User::find(Auth::id());
-
-        if($user->email !== $request->email) {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                "bio" => ["string", "max:255", "nullable"],
-                "avatar" => ["url", "max:255", "nullable"],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            ]);
-        } else {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                "bio" => ["string", "max:255", "nullable"],
-                "avatar" => ["url", "max:255", "nullable"],
-            ]);
-        }
 
         $user->email = $request->email;
 
         $user->name = $request->name;
+
+        $user->avatar = $request->avatar;
+
         if($request->password) {
             $user->password = Hash::make($request->password);
         }

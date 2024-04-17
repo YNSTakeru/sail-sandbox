@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Comment;
@@ -26,8 +27,6 @@ class ArticleController extends Controller
             $articles = Article::select("articles.*", "users.name as user_name")
             ->join("users", "articles.user_id", "=", "users.id")->orderBy("articles.created_at", "desc")
             ->paginate(10);
-
-
         }
 
         if($requestTag) {
@@ -52,33 +51,15 @@ class ArticleController extends Controller
         return view("articles.create");
     }
 
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $convertTags = json_decode($request->tags, true);
+        if(auth()->guest()) {
+            return response()->json(["error" => "Unauthorized"], 401);
+        }
 
-        $request->merge([
-            "tags" => $convertTags,
-        ]);
-
-
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'abstract' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:1000'],
-        ]);
-
-        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
-            return count($value) === count(array_unique($value));
-        });
-
-        // 配列のバリデーション
-        $request->validate([
-            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
-            'tags.*' => ['string', 'max:255'],
-        ]);
-
+        $tags = $request->tags;
         $tagModels = [];
-        foreach ($convertTags as $tag) {
+        foreach ($tags as $tag) {
             $tagModel = Tag::firstOrCreate(["name" => $tag]);
             $tagModels[] = $tagModel;
         }
@@ -112,7 +93,10 @@ class ArticleController extends Controller
 
         $comments = Comment::where("article_id", $id)->join("users", "comments.user_id", "=", "users.id")->select("comments.*", "users.name as user_name", "users.avatar as user_avatar") ->orderBy("created_at", "desc")->get();
 
-        return view("articles.show", compact("article", "user", "tags", "articleTags", "comments"));
+        $favoriteArticlesCount = UserFavoriteArticles::where("user_id", $article->user_id)->count();
+
+
+        return view("articles.show", compact("article", "user", "tags", "articleTags", "comments", "favoriteArticlesCount"));
     }
 
     public function edit($id)
@@ -125,31 +109,18 @@ class ArticleController extends Controller
         return view('articles.edit', compact('article', "tags"));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreArticleRequest $request, $id)
     {
 
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'abstract' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:1000'],
-        ]);
+        if(auth()->guest()) {
+            return response()->json(["error" => "Unauthorized"], 401);
+        }
 
-        Validator::extend('unique_in_array', function ($attribute, $value, $parameters, $validator) {
-            return count($value) === count(array_unique($value));
-        });
+        if(auth()->user()->id !== (int)$request->user_id) {
+            return response()->json(["error" => "Forbidden"], 403);
+        }
 
-        $convertTags = json_decode($request->tags, true);
-
-
-        $request->merge([
-            "tags" => $convertTags,
-        ]);
-
-        $request->validate([
-            'tags' => ['required', 'array', 'max:10', 'unique_in_array'],
-            'tags.*' => ['string', 'max:255'],
-        ]);
-
+        $tags = $request->tags;
 
         $article = Article::find($id);
         $article->title = $request->title;
@@ -158,7 +129,7 @@ class ArticleController extends Controller
         $article->save();
 
         $tagModels = [];
-        foreach ($convertTags as $tag) {
+        foreach ($tags as $tag) {
             $tagModel = Tag::firstOrCreate(["name" => $tag]);
             $tagModels[] = $tagModel;
         }
@@ -179,6 +150,7 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         $article->delete();
+        ArticleTag::where("article_id", $id)->delete();
 
         return to_route("home");
     }

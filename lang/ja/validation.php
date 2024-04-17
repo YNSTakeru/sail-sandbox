@@ -135,12 +135,16 @@ return [
         ],
         "tags" => [
             'unique_in_array' => 'タグが重複しています。'
+        ],
+        "email" => [
+            "lowercase" => "メールアドレスは小文字で指定してください。"
         ]
     ],
 
     'attributes' => [
         "name" => "名前",
         "email" => "メールアドレス",
+        "password" => "パスワード",
         'tags' => "タグ",
         "title" => "記事タイトル",
         "content" => "記事内容",
