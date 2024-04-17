@@ -133,8 +133,6 @@ class ArticleControllerUpdateTest extends TestCase
         );
         $accessUser = User::factory()->create();
 
-
-
         $response = $this->actingAs($accessUser)->putJson(route('articles.update', ['title' => $article->title,
         "abstract" => $article->abstract,
         "content" => $article->content,
