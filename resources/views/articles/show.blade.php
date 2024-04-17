@@ -29,6 +29,7 @@
                         <form class="delete_{{ $article->id }}" style="display: inline;" method="post"
                             action="{{ route('articles.destroy', ['id' => $article->id]) }}">
                             @csrf
+                            @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger">
                                 <i class="ion-trash-a"></i> Delete Article
                             </button>

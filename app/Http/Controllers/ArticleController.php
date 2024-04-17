@@ -147,6 +147,7 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         $article->delete();
+        ArticleTag::where("article_id", $id)->delete();
 
         return to_route("home");
     }
