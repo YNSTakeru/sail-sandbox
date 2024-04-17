@@ -15,10 +15,18 @@
                         &nbsp; {{ $user->name }} <span class="counter">(10)</span>
                     </button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-sm btn-outline-primary">
-                        <i class="ion-heart"></i>
-                        &nbsp; Favorite Post <span class="counter">(29)</span>
-                    </button>
+                    @if (Auth::check())
+                        <form style="display:inline;"
+                            action="{{ route('articles.favorite', ['id' => $article->id, 'user_id' => Auth::user()->id]) }}"
+                            method="POST">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="ion-heart"></i>
+                                &nbsp; Favorite Post <span class="counter">({{ $article->favorite_count }})</span>
+                            </button>
+                        </form>
+                    @endif
+
                     @if (Auth::id() == $user->id)
                         <form style="display: inline;" method="get"
                             action="{{ route('articles.edit', ['id' => $article->id]) }}">
@@ -29,6 +37,7 @@
                         <form class="delete_{{ $article->id }}" style="display: inline;" method="post"
                             action="{{ route('articles.destroy', ['id' => $article->id]) }}">
                             @csrf
+                            @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger">
                                 <i class="ion-trash-a"></i> Delete Article
                             </button>
@@ -70,10 +79,20 @@
                         &nbsp; Follow {{ $user->name }}
                     </button>
                     &nbsp;
-                    <button class="btn btn-sm btn-outline-primary">
-                        <i class="ion-heart"></i>
-                        &nbsp; Favorite Article <span class="counter">({{ $article->favorite_count }})</span>
-                    </button>
+                    @if (Auth::check())
+                        <form style="display:inline;" action="{{ route('profile', ['id' => $user->id]) }}"
+                            method="GET">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="ion-heart"></i>
+                                &nbsp; Favorite Article <span class="counter">({{ $favoriteArticlesCount }})</span>
+                            </button>
+                        </form>
+                    @else
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="ion-heart"></i>
+                            &nbsp; Favorite Post <span class="counter">(29)</span>
+                        </button>
+                    @endif
                     @if (Auth::id() == $user->id)
                         <form style="display: inline;" method="get"
                             action="{{ route('articles.edit', ['id' => $article->id]) }}">

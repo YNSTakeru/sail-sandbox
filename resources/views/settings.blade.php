@@ -13,6 +13,7 @@
 
                     <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
+                        @method("PUT")
                         <fieldset>
                             <fieldset class="form-group">
                                 <input class="form-control" type="text" placeholder="URL of profile picture"

@@ -10,6 +10,7 @@
 
                     <form method="POST" action="{{ route('articles.update', ['id' => $article->id]) }}">
                         @csrf
+                        @method('PUT')
                         <fieldset>
                             <fieldset class="form-group">
                                 <x-text-input type="text" class="form-control-lg" placeholder="Article Title"

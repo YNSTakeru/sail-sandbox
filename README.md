@@ -2,6 +2,7 @@
 
 ```bash
 cp .env.example .env
+composer require laravel/sail --dev
 composer install
 php artisan key:generate
 ./vendor/bin/sail up -d
