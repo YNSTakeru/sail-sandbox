@@ -1,5 +1,11 @@
 ## テスト実行コマンド
 
+`.env`ファイルを以下の設定に変更
+
+```bash
+APP_FAKER_LOCALE=ja_jp
+```
+
 ```bash
 XDEBUG_MODE=coverage sail artisan test --coverage
 ```
